@@ -33,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'state_acount',
         'password',
         'profile_photo_path',
+        'team_id'
     ];
 
     /**
@@ -87,5 +88,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getCreatedAtFormattedAttribute() {
         return $this->created_at->format('m/d/Y') . ' at ' . $this->created_at->format('h:i a');
+    }
+
+    public function team (){
+      return $this->belongsTo(Team::class);
     }
 }

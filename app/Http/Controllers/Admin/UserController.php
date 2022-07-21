@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\PasswordGenerate;
+use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,8 +36,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        $teams = Team::all();
         $roles = Role::all();
-        return view('user.create', compact('roles'));
+        return view('user.create', compact('roles', 'teams'));
     }
 
     /**
@@ -52,6 +54,7 @@ class UserController extends Controller
         'last_name' => 'required',
         'email' => 'required|email|unique:users',
         'phone_number' => 'required',
+        'team_id' => $request->role == 2 ? 'required' : '', 
         'role' => 'required'
       ]);
       
@@ -64,6 +67,7 @@ class UserController extends Controller
         'email_verified_at' => Carbon::now(),
         'phone_number' => $request->phone_number,
         'state_acount' => 0,
+        'team_id' => $request->role != 2 ? null : $request->team_id,
         'password' => bcrypt($password),
       ]);
       
@@ -96,7 +100,8 @@ class UserController extends Controller
     {
       $user = User::find($id);
       $roles = Role::all();
-      return view('user.edit', compact('user', 'roles'));
+      $teams = Team::all();
+      return view('user.edit', compact('user', 'roles', 'teams'));
     }
 
     /**
@@ -113,6 +118,7 @@ class UserController extends Controller
         'last_name' => 'required',
         'email' => 'required|email',
         'phone_number' => 'required',
+        'team_id' => $request->role == 2 ? 'required' : '', 
         'role' => 'required'
       ]);
 
@@ -123,6 +129,7 @@ class UserController extends Controller
         'email' => $request->email,
         'email_verified_at' => now(),
         'phone_number' => $request->phone_number,
+        'team_id' => $request->role != 2 ? null : $request->team_id,
         'state_acount' => $request->status_acount,
       ]);
       

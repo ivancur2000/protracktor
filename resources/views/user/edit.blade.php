@@ -127,10 +127,61 @@
               </div>
           </div>
 
+          <div class="mt-8 mb-6 row">
+              <!--begin::Label-->
+              <label class="col-lg-4 col-form-label fw-bold fs-6">
+                  <h4 class="text-right">Teams</h4>
+                  <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin finibus sem vehicula vulputate.</small>
+              </label>
+              <!--end::Label-->
+              <!--begin::Col-->
+              <div class="col-lg-8">
+                <select class="w-full form-control" id="team_id" name="team_id">
+                  <option></option>
+                  @foreach($teams as $team)
+                    <option 
+                      value="{{ $team->id }}"
+                      @if($user->team)
+                        @if($team->id == $user->team->id)
+                          selected
+                        @endif
+                      @endif
+                    >
+                      {{ $team->name }}
+                    </option>
+                  @endforeach
+                </select>
+              </div>
+              <!--end::Col-->
+          </div>
           <div class="w-full">
             <button class="mx-auto mt-2 btn btn-primary profile-button btn-sm" type="submit">Update</button>
           </div>
       </div>
     </form>
 </div>
+<script>
+let role = document.getElementsByName('role');
+let teamSelect = document.getElementById('team_id');
+
+role.forEach((roleElement)=> {
+
+  if(roleElement.checked){
+    if(roleElement.value == 2){
+      teamSelect.disabled = false;
+    }else{
+      teamSelect.disabled = true;
+    }
+  }
+  
+  roleElement.addEventListener('click', (e)=>{
+    if(e.target.value == 2){
+      teamSelect.disabled = false;
+    }else{
+      teamSelect.disabled = true;
+    }
+  });
+});
+
+</script>
 @endsection

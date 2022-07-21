@@ -3,7 +3,7 @@
 @section('pageTitle', 'Dashboard - Users - Add New User')
 @section('content')
 <div class="container bg-white rounded">
-    <form action="{{ route('user.store') }}" method="POST">
+    <form name="formUser" action="{{ route('user.store') }}" method="POST">
       <x-jet-validation-errors/>
       @csrf
       <div class="row">
@@ -64,10 +64,46 @@
               </div>
               <!--end::Col-->
           </div>
+          <div class="mt-8 mb-6 row">
+              <!--begin::Label-->
+              <label class="col-lg-4 col-form-label fw-bold fs-6">
+                  <h4 class="text-right">Teams</h4>
+                  <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin finibus sem vehicula vulputate.</small>
+              </label>
+              <!--end::Label-->
+              <!--begin::Col-->
+              <div class="col-lg-8">
+                <select class="w-full form-control" id="team_id" name="team_id">
+                  <option></option>
+                  @foreach($teams as $team)
+                    <option value="{{ $team->id }}">
+                      {{ $team->name }}
+                    </option>
+                  @endforeach
+                </select>
+              </div>
+              <!--end::Col-->
+          </div>
           <div class="w-full">
             <button class="mx-auto mt-2 btn btn-primary profile-button btn-sm" type="submit">Register</button>
           </div>
       </div>
     </form>
 </div>
+<script>
+let role = document.getElementsByName('role');
+let teamSelect = document.getElementById('team_id');
+teamSelect.disabled = true;
+
+role.forEach((roleElement)=> {
+  roleElement.addEventListener('click', (e)=>{
+    if(e.target.value == 2){
+      teamSelect.disabled = false;
+    }else{
+      teamSelect.disabled = true;
+    }
+  });
+});
+
+</script>
 @endsection

@@ -92,6 +92,7 @@
                     <th data-column-key="orderID" class="min-w-100px">User Role</th>
                     <th data-column-key="productType" class="min-w-100px">Email Address</th>
                     <th data-column-key="closingOffice" class="text-end min-w-75px">Account Status</th>
+                    <th data-column-key="closingOffice" class="text-end min-w-75px">Team</th>
                     <th data-column-key="icono" class="text-end min-w-100px pe-5"></th>    
                 </tr>
                 <!--end::Table row-->
@@ -126,6 +127,15 @@
                         @deafult
                           {{"Pending approval"}}
                       @endswitch
+                    </td>
+                    <td data-column-key="closingOffice" class="text-end pe-0">
+                      @if($user->team)
+                        <div class="badge badge-light-success">
+                          {{ $user->team->name }}
+                        </div>
+                      @else
+                        {{"No Team"}}
+                      @endif
                     </td>
                     <td class="w-full text-center" data-column-key="Status">
                       <a href="{{  route('user.edit', $user->id) }}">
