@@ -1,0 +1,13 @@
+.block-action-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.audience-checboxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
